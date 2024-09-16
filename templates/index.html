@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramen Profitability Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Ramen Profitability Calculator</h1>
+        
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="income-goal-slider">
+                    Monthly Income Goal ($)
+                </label>
+                <input type="range" id="income-goal-slider" class="slider mb-2" min="0" max="10000" step="100" value="5000">
+                <input type="number" id="income-goal-input" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="5000" max="10000">
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="product-price-slider">
+                    Product Price ($)
+                </label>
+                <input type="range" id="product-price-slider" class="slider mb-2" min="0" max="500" step="0.5" value="10">
+                <input type="number" id="product-price-input" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="10" max="500">
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="customer-count-slider">
+                    Customer Count
+                </label>
+                <input type="range" id="customer-count-slider" class="slider mb-2" min="0" max="1000" step="1" value="500">
+                <input type="number" id="customer-count-input" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="500" max="1000">
+            </div>
+            
+            <div class="results-section">
+                <h2 class="text-xl font-bold mb-2">Results</h2>
+                <p class="mb-2">Current Monthly Profit: <span id="result-display" class="font-bold text-2xl"></span></p>
+                <p id="difference-display" class="font-bold mb-4"></p>
+                <a href="https://www.buymeacoffee.com/mustbeash" target="_blank" class="buy-me-coffee-btn" style="display: inline-block !important; visibility: visible !important; opacity: 1 !important;">
+                    Buy Me Coffee
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+</body>
+</html>

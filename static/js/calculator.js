@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const customerCountInput = document.getElementById('customer-count-input');
     const resultDisplay = document.getElementById('result-display');
     const differenceDisplay = document.getElementById('difference-display');
+    const customerCountNeeded = document.getElementById('customer-count-needed');
+    const productPriceNeeded = document.getElementById('product-price-needed');
 
     // Update maximum values
     incomeGoalSlider.max = 10000;
@@ -35,6 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
             differenceDisplay.classList.remove('text-green-500');
             differenceDisplay.classList.add('text-red-500');
         }
+
+        // Calculate and display required customers and price
+        const requiredCustomers = Math.ceil(incomeGoal / productPrice);
+        const requiredPrice = incomeGoal / customerCount;
+
+        customerCountNeeded.textContent = `${requiredCustomers} Customers`;
+        productPriceNeeded.textContent = `$${requiredPrice.toFixed(2)} Products`;
     }
 
     function updateLinkedValue(sourceInput, targetInput, targetSlider) {
@@ -91,17 +100,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     productPriceInput.addEventListener('input', () => {
         let value = productPriceInput.value;
-        // Remove any non-digit characters except for the decimal point
+        // Allow only digits and one decimal point
         value = value.replace(/[^\d.]/g, '');
         // Ensure only one decimal point
-        const decimalIndex = value.indexOf('.');
-        if (decimalIndex !== -1) {
-            value = value.slice(0, decimalIndex + 1) + value.slice(decimalIndex + 1).replace(/\./g, '');
+        const parts = value.split('.');
+        if (parts.length > 2) {
+            value = parts[0] + '.' + parts.slice(1).join('');
         }
-        // Convert to float and limit to max value
-        value = Math.min(parseFloat(value) || 0, 500);
+        // Limit to two decimal places
+        if (parts[1] && parts[1].length > 2) {
+            value = parts[0] + '.' + parts[1].slice(0, 2);
+        }
+        // Update the input value
         productPriceInput.value = value;
-        productPriceSlider.value = value;
+
+        // Convert to float and limit to max value for calculations
+        const numValue = Math.min(parseFloat(value) || 0, 500);
+        productPriceSlider.value = numValue;
         updateLinkedValue(productPriceInput, customerCountInput, customerCountSlider);
         updateCalculation();
     });
